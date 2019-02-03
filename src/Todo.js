@@ -42,8 +42,7 @@ export default class Todo extends Component {
     this.setState({title: e.target.value })
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit() {
     this.props.edit(this.state)
     this.setState({
       id: '',
@@ -58,17 +57,24 @@ export default class Todo extends Component {
     const strikeThrough = this.props.todo.done === true ? {textDecoration: "line-through",color:"grey"} : {}
     return (
       <Box>
-        <div style={{display: this.state.edit === true ? "none" : "block"}}>
-          <span style={{cursor: "pointer"}} onClick={this.props.toggle}>{status}</span> {' '}
-          <span style={{cursor: "pointer"}} onClick={this.props.delete}>{String.fromCharCode(0xD83D,0xDDD1)}</span>{' '}
+        <span style={{cursor: "pointer"}} onClick={this.props.toggle}>{status}</span> {' '}
+        <span style={{cursor: "pointer"}} onClick={this.props.delete}>{String.fromCharCode(0xD83D,0xDDD1)}</span>{' '}
+        
+        <div style={{display: this.state.edit === true ? "none" : "inline"}}>
           <span style={strikeThrough} onClick={this.handleClick}>{this.props.todo.title}</span>
         </div>
-        <form onSubmit={this.handleSubmit} style={{display: this.state.edit === false ? "none" : "block"}}>
-          <span style={{cursor: "pointer"}} onClick={this.props.toggle}>{status}</span> {' '}
-          <span style={{cursor: "pointer"}} onClick={this.props.delete}>{String.fromCharCode(0xD83D,0xDDD1)}</span>{' '}
-          <input value={this.state.title} name='title' onChange={this.handleChange} style={{border: "none"}}/>
-          <input type='submit' value='+' />
-        </form>
+        
+        <div style={{display: this.state.edit === false ? "none" : "inline"}}>
+          <input 
+            id={this.props.todo.id}
+            value={this.state.title} 
+            autoComplete="off" 
+            name='title' 
+            onChange={this.handleChange} 
+            style={{border: "none"}} 
+            onBlur={this.handleSubmit}
+          />
+        </div>
       </Box>
     )
   }
