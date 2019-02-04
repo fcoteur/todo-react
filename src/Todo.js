@@ -51,7 +51,6 @@ export default class Todo extends Component {
     })
   }
 
-
   render() {
     const status = this.props.todo.done === false ? String.fromCharCode(0x2610) : String.fromCharCode(0x2611)
     const strikeThrough = this.props.todo.done === true ? {textDecoration: "line-through",color:"grey"} : {}
@@ -71,7 +70,7 @@ export default class Todo extends Component {
             autoComplete="off" 
             name='title' 
             onChange={this.handleChange} 
-            style={{border: "none"}} 
+            
             onBlur={this.handleSubmit}
           />
         </div>

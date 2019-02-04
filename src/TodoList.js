@@ -63,15 +63,47 @@ export default class TodoList extends Component {
     this.setState({todos: newTodos})
   }
 
+  onDragStart(e,idx) {
+    e.dataTransfer.setData("startIdx", idx)
+  }
+
+  onDragOver(e, idx) {
+    e.preventDefault()
+  }
+
+  onDrop(e, endIdx) {
+    let startIdx = e.dataTransfer.getData("startIdx");
+    let newTodos = this.state.todos.slice();
+    let todoThatMoves = newTodos[startIdx];
+    console.log(todoThatMoves)
+    newTodos.splice(startIdx,1);
+    if (endIdx>startIdx) {
+      newTodos.splice(endIdx-1,0,todoThatMoves);
+    } else {
+      newTodos.splice(endIdx,0,todoThatMoves);
+    }
+    this.setState({todos: newTodos})
+
+    console.log(startIdx,' is moved to ',endIdx)
+  }
+
   render() {
     const list = this.state.todos.map((todo, idx) => {
-      return <Todo 
-      key={todo.id} 
-      todo={todo} 
-      delete={this.handeDelete.bind(this, idx)} 
-      toggle={this.handleToggle.bind(this, idx)}
-      edit={this.handleEditToDo.bind(this)}
-      />
+      return (
+      <div 
+        key={todo.id}
+        draggable 
+        onDragOver={(e)=>this.onDragOver(e, idx)} 
+        onDrop={(e) => {this.onDrop(e, idx)}}
+        onDragStart={(e) => {this.onDragStart(e,idx)}}
+      >
+        <Todo  
+        todo={todo} 
+        delete={this.handeDelete.bind(this, idx)} 
+        toggle={this.handleToggle.bind(this, idx)}
+        edit={this.handleEditToDo.bind(this)}
+        />
+      </div>)
     });
 
     return (
