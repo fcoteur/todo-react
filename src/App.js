@@ -6,14 +6,13 @@ const Box = styled.div`
   margin: 10px 5px;
   width: 400px;
   text-align: center;
-  border: 1px black solid;
 `;
 
 export default class App extends Component {
   render() {
     return (
       <Box>
-        <h1>To Do List</h1>
+        <h2>To Do List</h2>
         <TodoList />
       </Box>
     )
