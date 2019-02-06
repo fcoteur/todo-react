@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components';
 
 const Box = styled.div`
-  margin: 10px 5px;
+  margin: 1px 0px;
 `;
 
 export default class Todo extends Component {
